@@ -1,7 +1,7 @@
 % Birthday calendar
 % Author: Hakon Malmedal
 \documentclass[fontsize=20pt]{scrartcl}
-\usepackage[norsk]{babel}
+%%\usepackage[norsk]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -30,8 +30,8 @@
       \pgfmathsetlength{\pgf@ya}{\tikz@lib@cal@yshift}%
       \pgfmathsetlength\pgf@xa{\tikz@lib@cal@xshift}%
       \pgftransformyshift{-\pgf@ya}
-      \foreach \d/\l in {0/Mandag,1/Tirsdag,2/Onsdag,3/Torsdag,%
-                         4/Fredag,5/LÃ¸rdag,6/SÃ¸ndag} {
+      \foreach \d/\l in {0/Monday,1/Tuesday,2/Wednesday,3/Thursday,%
+                         4/Friday,5/Saturday,6/Sunday} {
         \pgf@xa=\d\pgf@xa%
         \pgftransformxshift{\pgf@xa-\cellwidth/2}%
         \pgftransformyshift{\pgf@ya}%
@@ -45,9 +45,9 @@
 
 %% Adapted from pgf source
 \def\pgfcalendarmonthname#1{%
-  \translate{\ifcase#1\or Januar\or Februar\or Mars\or April\or
-    Mai\or Juni\or Juli\or August\or September\or Oktober\or
-    November\or Desember\fi}%
+  \translate{\ifcase#1\or January\or February\or March\or April\or
+    May\or June\or July\or August\or September\or October\or
+    November\or December\fi}%
 }
 
 \makeatletter
@@ -369,13 +369,21 @@
 \end{tikzpicture}
 }
 
+\newsavebox{\balloons}
+\savebox{\balloons}{
+  \begin{tikzpicture}
+    \node (a) at (0,0)
+    {\includegraphics{images/balloons.png}};
+  \end{tikzpicture}
+}
+
 \pgfkeys{/tikz/week~number/.code =
   {
     \week_number:nnn { 
       \pgfcalendarifdateyear } { 
       \pgfcalendarifdatemonth } { 
       \pgfcalendarifdateday }
-    \addtext{ Uke ~ \int_to_arabic:n { \l_week_number_W_int } }
+    \addtext{\int_to_arabic:n { \l_week_number_W_int } }
   }
 }
 
@@ -385,6 +393,14 @@
   {
     \draw (-\cellwidth,0) node [above right,font=\Huge]
     {\resizebox{!}{0.8ex}{\usebox{\flagNO}}};
+  }
+}
+
+\pgfkeys{/tikz/birthday/.code =
+  {
+    \addtext{#1}
+    \draw (-\cellwidth,0) node [above right,font=\Huge]
+    {\resizebox{!}{1.5ex}{\usebox{\balloons}}};
   }
 }
 
@@ -425,7 +441,7 @@
 \centering
 
 \begin{tikzpicture}[thick]
-  \calendar[dates=2012-05-01 to 2012-05-last,
+  \calendar[dates=2016-07-01 to 2016-07-last,
             week list,
             month label above centered,
             month text=\textsc{\%mt \%y0},
@@ -457,46 +473,31 @@
       equals=05-17,
       equals=12-25,
       equals=12-26) [red]
-  if (equals=01-01,
-      equals=01-21,
-      equals=02-06,
-      equals=02-21,
-      equals=05-01,
-      equals=05-08,
-      equals=05-17,
-      equals=06-07,
-      equals=07-04,
-      equals=07-20,
-      equals=07-29,
-      equals=08-19,
-      equals=12-25,
-      Easter,
-      Easter=49) [flag-flying day]
-  if (equals=01-01) [observance=Förste nyttårsdag]
-  if (equals=01-21) [observance=Prinsesse Ingrid Alexandra]
-  if (equals=02-06) [observance=Samefolkets dag]
-  if (equals=02-21) [observance=Kong Harald~V]
-  if (equals=05-01) [observance=Offentlig hytidsdag]
-  if (equals=05-08) [observance=Frigringsdagen]
-  if (equals=05-17) [observance=Grunnlovsdag]
-  if (equals=06-07) [observance=UnionsopplÃ¸sningen]
-  if (equals=06-23) [observance=Sankthansaften]
-  if (equals=07-04) [observance=Dronning Sonja]
-  if (equals=07-20) [observance=Kronprins Haakon]
-  if (equals=07-29) [observance=Olsok]
-  if (equals=08-19) [observance=Kronprinsesse Mette-Marit]
-  if (equals=10-24) [observance=FN-dagen]
-  if (equals=12-25) [observance=FÃ¸rste juledag]
-  if (equals=12-26) [observance=Andre juledag]
-  if (Easter=-49) [observance=Fastelavnssöndag]
-  if (Easter=-7) [observance=Palmesöndag]
-  if (Easter=-3) [observance=Skjärtorsdag]
-  if (Easter=-2) [observance=Langfredag]
-  if (Easter) [observance=Förste påskedag]
-  if (Easter=1) [observance=Andre påskedag]
-  if (Easter=39) [observance=Kristi himmelfartsdag]
-  if (Easter=49) [observance=Förste pinsedag]
-  if (Easter=50) [observance=Andre pinsedag]
+  % if (equals=01-01,
+  %     equals=01-21,
+  %     equals=02-06,
+  %     equals=02-21,
+  %     equals=05-01,
+  %     equals=05-08,
+  %     equals=05-17,
+  %     equals=06-07,
+  %     equals=07-04,
+  %     equals=07-20,
+  %     equals=07-29,
+  %     equals=08-19,
+  %     equals=12-25,
+  %     Easter,
+  %     Easter=49) [flag-flying day]
+  if (equals=01-01) [observance=New Year's Day]
+  if (equals=07-21) [birthday=Thomas]
+  if (equals=12-25) [observance=Christmas Day]
+  if (equals=12-26) [observance=Boxing Day]
+  if (Easter=-7) [observance=Palm Sundag]
+  if (Easter=-3) [observance=Maundy Thursday]
+  if (Easter=-2) [observance=Good Friday]
+  if (Easter) [observance=Easter Sunday]
+  if (Easter=1) [observance=Easter Monday]
+  if (Easter=39) [observance=Ascension]
   if (Advent) [observance=Advent]
   if (equals=05-07) [anniversary={Brahms}{1833}]
 ;
