@@ -436,21 +436,21 @@
 \newlength{\cellwidth}
 \setlength{\cellwidth}{35mm}
 
-\begin{document}
+\newcommand{\calpage}[2]{
 \centering
 \begin{minipage}{\textwidth}
 \centering
-  \includegraphics{images/image1.jpg}
+  \includegraphics{images/#2}
 \end{minipage}
 
 \begin{minipage}{\textwidth}
-\vspace*{6cm}
+\vspace*{4cm}
 \end{minipage}
 
 \begin{minipage}{\textwidth}
 \centering
 \begin{tikzpicture}[thick]
-  \calendar[dates=2016-12-01 to 2016-12-last,
+  \calendar[dates=#1-01 to #1-last,
             week list,
             month label above centered,
             month text=\textsc{\%mt \%y0},
@@ -470,14 +470,10 @@
       equals=11-01,
       equals=12-01) [week number]
   if (Sunday,
-      Easter=-3, % Maundy Thursday
+      equals=01-01, % Newyears day 
+      equals=2017-02-20, % Family day
       Easter=-2, % Good Friday
-      Easter,    % Easter Sunday
       Easter=1,  % Easter Monday
-      Easter=39, % Feast of the Ascension
-      Easter=49, % Pentecost
-      Easter=50, % Whit Monday
-      equals=01-01,
       equals=05-01,
       equals=05-17,
       equals=12-25,
@@ -505,4 +501,22 @@
 ;
 \end{tikzpicture}
 \end{minipage}
+}
+
+
+\begin{document}
+\calpage{2016-12}{image1.jpg}
+\calpage{2017-01}{image1.jpg}
+\calpage{2017-02}{image1.jpg}
+\calpage{2017-03}{image1.jpg}
+\calpage{2017-04}{image1.jpg}
+\calpage{2017-05}{image1.jpg}
+\calpage{2017-06}{image1.jpg}
+\calpage{2017-07}{image1.jpg}
+\calpage{2017-08}{image1.jpg}
+\calpage{2017-09}{image1.jpg}
+\calpage{2017-10}{image1.jpg}
+\calpage{2017-11}{image1.jpg}
+\calpage{2017-12}{image1.jpg}
+\calpage{2018-01}{image1.jpg}
 \end{document}
