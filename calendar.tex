@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[margin=1cm,a4paper,landscape]{geometry}
+\usepackage[margin=1cm,a3paper,portrait]{geometry}
 \pagestyle{empty}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -437,11 +437,20 @@
 \setlength{\cellwidth}{35mm}
 
 \begin{document}
-
 \centering
+\begin{minipage}{\textwidth}
+\centering
+  \includegraphics{images/image1.jpg}
+\end{minipage}
 
+\begin{minipage}{\textwidth}
+\vspace*{6cm}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\centering
 \begin{tikzpicture}[thick]
-  \calendar[dates=2016-07-01 to 2016-07-last,
+  \calendar[dates=2016-12-01 to 2016-12-last,
             week list,
             month label above centered,
             month text=\textsc{\%mt \%y0},
@@ -473,23 +482,16 @@
       equals=05-17,
       equals=12-25,
       equals=12-26) [red]
-  % if (equals=01-01,
-  %     equals=01-21,
-  %     equals=02-06,
-  %     equals=02-21,
-  %     equals=05-01,
-  %     equals=05-08,
-  %     equals=05-17,
-  %     equals=06-07,
-  %     equals=07-04,
-  %     equals=07-20,
-  %     equals=07-29,
-  %     equals=08-19,
-  %     equals=12-25,
-  %     Easter,
-  %     Easter=49) [flag-flying day]
   if (equals=01-01) [observance=New Year's Day]
   if (equals=07-21) [birthday=Thomas]
+  if (equals=05-14) [birthday=Kai]
+  if (equals=01-28) [birthday=Karsten]
+  if (equals=09-25) [birthday={Bob, Beth, Jane}]
+  if (equals=06-08) [birthday=Barb]
+  if (equals=10-06) [birthday=Erin]
+  % if (equals=08-01) [birthday=Hannah]
+  % if (equals=05-01) [birthday=Miles]
+  % if (equals=01-01) [birthday=Vivian]
   if (equals=12-25) [observance=Christmas Day]
   if (equals=12-26) [observance=Boxing Day]
   if (Easter=-7) [observance=Palm Sundag]
@@ -502,5 +504,5 @@
   if (equals=05-07) [anniversary={Brahms}{1833}]
 ;
 \end{tikzpicture}
-
+\end{minipage}
 \end{document}
