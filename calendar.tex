@@ -474,11 +474,51 @@
       equals=2017-02-20, % Family day
       Easter=-2, % Good Friday
       Easter=1,  % Easter Monday
-      equals=05-01,
-      equals=05-17,
-      equals=12-25,
-      equals=12-26) [red]
-  if (equals=01-01) [observance=New Year's Day]
+      equals=2017-05-22, % Victoria Day
+      equals=07-01, % Canada day
+      equals=2017-08-07, % Civic Holiday
+      equals=2017-09-04, % Labour Day
+      equals=2017-10-09, % Thanksgiving
+      equals=12-25, % Christmas Day
+      equals=12-26 %Boxing Day
+      ) [red]
+  if(equals=01-01) [observance= Newyears day ]
+  if(equals=2017-02-20) [observance= Family day]
+  if(Easter=-2) [observance= Good Friday]
+  if(Easter=1) [observance= Easter Monday]
+  if(equals=2017-05-22) [observance= Victoria Day]
+  if(equals=07-01) [observance= Canada day]
+  if(equals=2017-08-07) [observance= Civic Holiday]
+  if(equals=2017-09-04) [observance= Labour Day]
+  if(equals=2017-10-09) [observance= Thanksgiving]
+  if(equals=12-25) [observance= Christmas Day]
+  if(equals=12-26) [observance = Boxing Day]
+  % if (Sunday,
+  %     equals=01-01, % Nyårsdagen
+  %     equals=2017-01-06, % Trettondagen
+  %     Easter=-2, % Långfredag
+  %     Easter=1,  % Annandag påsk
+  %     equals=05-01, % Första maj
+  %     Easter=39, % Kristihimmelfärd
+  %     Easter=49, % Pingst
+  %     equals=06-06, % Flaggdagen
+  %     equals=2017-02-24, % Midsommar
+  %     equals=2017-11-04, % Alla helgons dag
+  %     equals=12-25, % Juldagen
+  %     equals=12-26 %Annandag Jul
+  %     ) [red]
+  % if(equals=01-01) [Nyårsdagen]
+  % if(equals=2017-01-06) [Trettondagen]
+  % if(Easter=-2) [Långfredag]
+  % if(Easter=1) [ Annandag påsk]
+  % if(equals=05-01) [Första maj]
+  % if(Easter=39) [Kristihimmelfärd]
+  % if(Easter=49) [Pingst]
+  % if(equals=06-06) [Flaggdagen]
+  % if(equals=2017-02-24) [Midsommar]
+  % if(equals=2017-11-04) [Alla helgons dag]
+  % if(equals=12-25) [Juldagen]
+  % if(equals=12-26) [Annandag Jul]
   if (equals=07-21) [birthday=Thomas]
   if (equals=05-14) [birthday=Kai]
   if (equals=01-28) [birthday=Karsten]
@@ -488,16 +528,6 @@
   % if (equals=08-01) [birthday=Hannah]
   % if (equals=05-01) [birthday=Miles]
   % if (equals=01-01) [birthday=Vivian]
-  if (equals=12-25) [observance=Christmas Day]
-  if (equals=12-26) [observance=Boxing Day]
-  if (Easter=-7) [observance=Palm Sundag]
-  if (Easter=-3) [observance=Maundy Thursday]
-  if (Easter=-2) [observance=Good Friday]
-  if (Easter) [observance=Easter Sunday]
-  if (Easter=1) [observance=Easter Monday]
-  if (Easter=39) [observance=Ascension]
-  if (Advent) [observance=Advent]
-  if (equals=05-07) [anniversary={Brahms}{1833}]
 ;
 \end{tikzpicture}
 \end{minipage}
