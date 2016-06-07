@@ -1,6 +1,11 @@
 % Birthday calendar
 % Author: Hakon Malmedal
 \documentclass[fontsize=20pt]{scrartcl}
+%Set calendar type
+\usepackage{etoolbox}
+\providetoggle{swedish}
+\settoggle{swedish}{true}
+
 %%\usepackage[norsk]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -449,6 +454,7 @@
 
 \begin{minipage}{\textwidth}
 \centering
+\iftoggle{swedish}{%
 \begin{tikzpicture}[thick]
   \calendar[dates=#1-01 to #1-last,
             week list,
@@ -456,69 +462,34 @@
             month text=\textsc{\%mt \%y0},
             day headings={font=\footnotesize},
             day letter headings]
-  if (Monday,
-      equals=01-01,
-      equals=02-01,
-      equals=03-01,
-      equals=04-01,
-      equals=05-01,
-      equals=06-01,
-      equals=07-01,
-      equals=08-01,
-      equals=09-01,
-      equals=10-01,
-      equals=11-01,
-      equals=12-01) [week number]
-  if (Sunday,
-      equals=01-01, % Newyears day 
-      equals=2017-02-20, % Family day
-      Easter=-2, % Good Friday
-      Easter=1,  % Easter Monday
-      equals=2017-05-22, % Victoria Day
-      equals=07-01, % Canada day
-      equals=2017-08-07, % Civic Holiday
-      equals=2017-09-04, % Labour Day
-      equals=2017-10-09, % Thanksgiving
-      equals=12-25, % Christmas Day
-      equals=12-26 %Boxing Day
+  if (Monday) [week number]
+      if (Sunday,
+      equals=01-01, % Nyårsdagen
+      equals=2017-01-06, % Trettondagen
+      Easter=-2, % Långfredag
+      Easter=1,  % Annandag påsk
+      equals=05-01, % Första maj
+      Easter=39, % Kristihimmelfärd
+      Easter=49, % Pingst
+      equals=06-06, % Flaggdagen
+      equals=2017-06-24, % Midsommar
+      equals=2017-11-04, % Alla helgons dag
+      equals=12-25, % Juldagen
+      equals=12-26 %Annandag Jul
       ) [red]
-  if(equals=01-01) [observance= Newyears day ]
-  if(equals=2017-02-20) [observance= Family day]
-  if(Easter=-2) [observance= Good Friday]
-  if(Easter=1) [observance= Easter Monday]
-  if(equals=2017-05-22) [observance= Victoria Day]
-  if(equals=07-01) [observance= Canada day]
-  if(equals=2017-08-07) [observance= Civic Holiday]
-  if(equals=2017-09-04) [observance= Labour Day]
-  if(equals=2017-10-09) [observance= Thanksgiving]
-  if(equals=12-25) [observance= Christmas Day]
-  if(equals=12-26) [observance = Boxing Day]
-  % if (Sunday,
-  %     equals=01-01, % Nyårsdagen
-  %     equals=2017-01-06, % Trettondagen
-  %     Easter=-2, % Långfredag
-  %     Easter=1,  % Annandag påsk
-  %     equals=05-01, % Första maj
-  %     Easter=39, % Kristihimmelfärd
-  %     Easter=49, % Pingst
-  %     equals=06-06, % Flaggdagen
-  %     equals=2017-02-24, % Midsommar
-  %     equals=2017-11-04, % Alla helgons dag
-  %     equals=12-25, % Juldagen
-  %     equals=12-26 %Annandag Jul
-  %     ) [red]
-  % if(equals=01-01) [Nyårsdagen]
-  % if(equals=2017-01-06) [Trettondagen]
-  % if(Easter=-2) [Långfredag]
-  % if(Easter=1) [ Annandag påsk]
-  % if(equals=05-01) [Första maj]
-  % if(Easter=39) [Kristihimmelfärd]
-  % if(Easter=49) [Pingst]
-  % if(equals=06-06) [Flaggdagen]
-  % if(equals=2017-02-24) [Midsommar]
-  % if(equals=2017-11-04) [Alla helgons dag]
-  % if(equals=12-25) [Juldagen]
-  % if(equals=12-26) [Annandag Jul]
+  if(equals=01-01) [observance = Nyårsdagen]
+  if(equals=2017-01-06) [observance = Trettondagen]
+  if(Easter=-2) [observance = Långfredag]
+  if(Easter=1) [observance =  Annandag påsk]
+  if(equals=05-01) [observance = Första maj]
+  if(Easter=39) [observance = Kristihimmelfärd]
+  if(Easter=49) [observance = Pingst]
+  if(equals=06-06) [observance = Flaggdagen]
+  if(equals=2017-06-24) [observance = Midsommar]
+  if(equals=2017-11-04) [observance = Alla helgons dag]
+  if(equals=12-25) [observance = Juldagen]
+  if(equals=12-26) [observance = Annandag Jul]
+%%Birthdays
   if (equals=07-21) [birthday=Thomas]
   if (equals=05-14) [birthday=Kai]
   if (equals=01-28) [birthday=Karsten]
@@ -529,7 +500,52 @@
   % if (equals=05-01) [birthday=Miles]
   % if (equals=01-01) [birthday=Vivian]
 ;
-\end{tikzpicture}
+\end{tikzpicture}}{%
+  \begin{tikzpicture}[thick]
+    \calendar[dates=#1-01 to #1-last,
+    week list,
+    month label above centered,
+    month text=\textsc{\%mt \%y0},
+    day headings={font=\footnotesize},
+    day letter headings]
+    %%if (Monday) [week number]
+    if (Sunday,
+    equals=01-01, % Newyears day 
+    equals=2017-02-20, % Family day
+    Easter=-2, % Good Friday
+    Easter=1,  % Easter Monday
+    equals=2017-05-22, % Victoria Day
+    equals=07-01, % Canada day
+    equals=2017-08-07, % Civic Holiday
+    equals=2017-09-04, % Labour Day
+    equals=2017-10-09, % Thanksgiving
+    equals=12-25, % Christmas Day
+    equals=12-26 %Boxing Day
+    ) [red]
+    if(equals=01-01) [observance= Newyears day ]
+    if(equals=2017-02-20) [observance= Family day]
+    if(Easter=-2) [observance= Good Friday]
+    if(Easter=1) [observance= Easter Monday]
+    if(equals=2017-05-22) [observance= Victoria Day]
+    if(equals=07-01) [observance= Canada day]
+    if(equals=2017-08-07) [observance= Civic Holiday]
+    if(equals=2017-09-04) [observance= Labour Day]
+    if(equals=2017-10-09) [observance= Thanksgiving]
+    if(equals=12-25) [observance= Christmas Day]
+    if(equals=12-26) [observance = Boxing Day]
+    %% Birthdays
+    if (equals=07-21) [birthday=Thomas]
+    if (equals=05-14) [birthday=Kai]
+    if (equals=01-28) [birthday=Karsten]
+    if (equals=09-25) [birthday={Bob, Beth, Jane}]
+    if (equals=06-08) [birthday=Barb]
+    if (equals=10-06) [birthday=Erin]
+    % if (equals=08-01) [birthday=Hannah]
+    % if (equals=05-01) [birthday=Miles]
+    % if (equals=01-01) [birthday=Vivian]
+    ;
+  \end{tikzpicture}
+} %end Canada
 \end{minipage}
 }
 
