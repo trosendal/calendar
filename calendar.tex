@@ -1,12 +1,12 @@
 % Birthday calendar
 % Author: Hakon Malmedal
 \documentclass[fontsize=20pt]{scrartcl}
-%Set calendar type
+% Set calendar type
 \usepackage{etoolbox}
 \providetoggle{swedish}
 \settoggle{swedish}{true}
 
-%%\usepackage[norsk]{babel}
+%% \usepackage[norsk]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -14,14 +14,14 @@
 \pagestyle{empty}
 \usepackage{graphicx}
 \usepackage{tikz}
-%%%<
+%%% <
 \usepackage{verbatim}
-%%%>
+%%% >
 \begin{comment}
-:Title: Birthday calendar
-:Tags: Calendar library;Calendars
-:Author: Hakon Malmedal
-:Slug: birthday-calendar
+  :Title: Birthday calendar
+  :Tags: Calendar library;Calendars
+  :Author: Hakon Malmedal
+  :Slug: birthday-calendar
 \end{comment}
 \usetikzlibrary{calendar,fit}
 \usepackage{expl3,xparse}
@@ -31,19 +31,19 @@
 \tikzoption{day headings}{\tikzstyle{day heading}=[#1]}
 \tikzstyle{day heading}=[]
 \tikzstyle{day letter headings}=[
-    execute before day scope={ \ifdate{day of month=1}{%
-      \pgfmathsetlength{\pgf@ya}{\tikz@lib@cal@yshift}%
-      \pgfmathsetlength\pgf@xa{\tikz@lib@cal@xshift}%
-      \pgftransformyshift{-\pgf@ya}
-      \foreach \d/\l in {0/Monday,1/Tuesday,2/Wednesday,3/Thursday,%
-                         4/Friday,5/Saturday,6/Sunday} {
-        \pgf@xa=\d\pgf@xa%
-        \pgftransformxshift{\pgf@xa-\cellwidth/2}%
-        \pgftransformyshift{\pgf@ya}%
-        \node[above=-0.5ex,day heading]{\l};%
-      }
-    }{}%
-  }%
+execute before day scope={ \ifdate{day of month=1}{%
+    \pgfmathsetlength{\pgf@ya}{\tikz@lib@cal@yshift}%
+    \pgfmathsetlength\pgf@xa{\tikz@lib@cal@xshift}%
+    \pgftransformyshift{-\pgf@ya}
+    \foreach \d/\l in {0/Monday,1/Tuesday,2/Wednesday,3/Thursday,%
+      4/Friday,5/Saturday,6/Sunday} {
+      \pgf@xa=\d\pgf@xa%
+      \pgftransformxshift{\pgf@xa-\cellwidth/2}%
+      \pgftransformyshift{\pgf@ya}%
+      \node[above=-0.5ex,day heading]{\l};%
+    }
+  }{}%
+}%
 ]
 \makeatother%
 %% End
@@ -57,21 +57,21 @@
 
 \makeatletter
 \tikzstyle{month label above centered}=[%
-  execute before day scope={%
-    \ifdate{day of month=1}{%
-      {
-        \pgfmathsetlength{\pgf@xa}{\tikz@lib@cal@xshift}%
-        \pgf@xb=\tikz@lib@cal@width\pgf@xa%
-        \advance\pgf@xb by-\pgf@xa%
-        \pgf@xb=.5\pgf@xb%
-        \pgftransformxshift{\pgf@xb}%
-        \pgftransformxshift{-\cellwidth/2}%
-        \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@yshift}%
-        \pgftransformyshift{0.333\pgf@y}
-        \tikzmonthcode%
-      }
-    }{}},
-  every month/.append style={anchor=base}
+execute before day scope={%
+  \ifdate{day of month=1}{%
+    {
+      \pgfmathsetlength{\pgf@xa}{\tikz@lib@cal@xshift}%
+      \pgf@xb=\tikz@lib@cal@width\pgf@xa%
+      \advance\pgf@xb by-\pgf@xa%
+      \pgf@xb=.5\pgf@xb%
+      \pgftransformxshift{\pgf@xb}%
+      \pgftransformxshift{-\cellwidth/2}%
+      \pgfmathsetlength{\pgf@y}{\tikz@lib@cal@yshift}%
+      \pgftransformyshift{0.333\pgf@y}
+      \tikzmonthcode%
+    }
+  }{}},
+every month/.append style={anchor=base}
 ]
 \makeatother
 %% End
@@ -79,7 +79,7 @@
 \ExplSyntaxOn
 
 %% Adapted from http://tex.stackexchange.com/a/56214/4771
-%%
+%% 
 % first of all we define the user level commands
 \NewDocumentCommand{\addtext}{ m }{ \bdaycal_input_add:n { #1 } }
 \NewDocumentCommand{\addtextyear}{ mm }{ \bdaycal_input_add_y:nn { #1 } { #2 } }
@@ -91,32 +91,32 @@
 
 % store globally an input in the sequence
 \cs_new:Npn \bdaycal_input_add:n #1
- {
+{
   \seq_gput_right:Nn \g_bdaycal_input_seq { #1 }
- }
+}
 
 \cs_new:Npn \bdaycal_input_add_y:nn #1 #2
- {
+{
   \seq_gput_right:Nn \g_bdaycal_input_seq { #1 ~ ( \int_to_arabic:n
     { \pgfcalendarifdateyear - #2 } ) }
- }
+}
 
 % how to output in direct order; we simply do a mapping function calling
 % \bdaycal_print:n after incrementing the counter
 \cs_new_protected:Npn \bdaycal_output_direct:
- {
+{
   \seq_map_inline:Nn \g_bdaycal_input_seq
-   {
+  {
     \bdaycal_print:n { ##1 }
-   }
+  }
   \seq_gclear:N \g_bdaycal_input_seq
- }
+}
 
 % the printing macro; change here for adapting to your wishes
 \cs_new:Npn \bdaycal_print:n #1
- {
+{
   #1 \par
- }
+}
 %% End
 
 %% Knuth's AoCP, vol 1, 2nd ed, pp 155--156
@@ -201,7 +201,7 @@
   }
 
   \pgfcalendardatetojulian { \l_easter_Y_int -
-     \l_easter_M_int - \l_easter_N_int
+    \l_easter_M_int - \l_easter_N_int
   } { \l_easter_julian_day_int }
 
 }
@@ -364,14 +364,14 @@
 
 \newsavebox{\flagNO}
 \savebox{\flagNO}{
-\begin{tikzpicture}
-  \fill[roed] rectangle (6pt,6pt);
-  \fill[roed,yshift=10pt] rectangle (6pt,6pt);
-  \fill[roed,xshift=10pt] rectangle (12pt,6pt);
-  \fill[roed,xshift=10pt,yshift=10pt] rectangle (12pt,6pt);
-  \fill[blaa,yshift=7pt] rectangle (22pt,2pt);
-  \fill[blaa,xshift=7pt] rectangle (2pt,16pt);
-\end{tikzpicture}
+  \begin{tikzpicture}
+    \fill[roed] rectangle (6pt,6pt);
+    \fill[roed,yshift=10pt] rectangle (6pt,6pt);
+    \fill[roed,xshift=10pt] rectangle (12pt,6pt);
+    \fill[roed,xshift=10pt,yshift=10pt] rectangle (12pt,6pt);
+    \fill[blaa,yshift=7pt] rectangle (22pt,2pt);
+    \fill[blaa,xshift=7pt] rectangle (2pt,16pt);
+  \end{tikzpicture}
 }
 
 \newsavebox{\balloons}
@@ -425,8 +425,8 @@
     font=\tiny,black] {\showtext};
     \node (lower left) at (-\cellwidth,0) {};
     \node[rounded corners, draw,
-          fit=(lower right) (upper left) (lower left),
-          inner sep=1mm] {};
+    fit=(lower right) (upper left) (lower left),
+    inner sep=1mm] {};
   }
 }
 
@@ -442,116 +442,115 @@
 \setlength{\cellwidth}{35mm}
 
 \newcommand{\calpage}[2]{
-\centering
-\begin{minipage}{\textwidth}
-\centering
-  \includegraphics{images/#2}
-\end{minipage}
+  \centering
+  \begin{minipage}{\textwidth}
+    \centering
+    \includegraphics{images/#2}
+  \end{minipage}
 
-\begin{minipage}{\textwidth}
-\vspace*{4cm}
-\end{minipage}
+  \begin{minipage}{\textwidth}
+    \vspace*{4cm}
+  \end{minipage}
 
-\begin{minipage}{\textwidth}
-\centering
-\iftoggle{swedish}{%
-\begin{tikzpicture}[thick]
-  \calendar[dates=#1-01 to #1-last,
-            week list,
-            month label above centered,
-            month text=\textsc{\%mt \%y0},
-            day headings={font=\footnotesize},
-            day letter headings]
-  if (Monday) [week number]
-      if (Sunday,
-      equals=01-01, % Nyårsdagen
-      equals=2017-01-06, % Trettondagen
-      Easter=-2, % Långfredag
-      Easter=1,  % Annandag påsk
-      equals=05-01, % Första maj
-      Easter=39, % Kristihimmelfärd
-      Easter=49, % Pingst
-      equals=06-06, % Flaggdagen
-      equals=2017-06-24, % Midsommar
-      equals=2017-11-04, % Alla helgons dag
-      equals=12-25, % Juldagen
-      equals=12-26 %Annandag Jul
-      ) [red]
-  if(equals=01-01) [observance = Nyårsdagen]
-  if(equals=2017-01-06) [observance = Trettondagen]
-  if(Easter=-2) [observance = Långfredag]
-  if(Easter=1) [observance =  Annandag påsk]
-  if(equals=05-01) [observance = Första maj]
-  if(Easter=39) [observance = Kristihimmelfärd]
-  if(Easter=49) [observance = Pingst]
-  if(equals=06-06) [observance = Flaggdagen]
-  if(equals=2017-06-24) [observance = Midsommar]
-  if(equals=2017-11-04) [observance = Alla helgons dag]
-  if(equals=12-25) [observance = Juldagen]
-  if(equals=12-26) [observance = Annandag Jul]
-%%Birthdays
-  if (equals=07-21) [birthday=Thomas]
-  if (equals=05-14) [birthday=Kai]
-  if (equals=01-28) [birthday=Karsten]
-  if (equals=09-25) [birthday={Bob, Beth, Jane}]
-  if (equals=06-08) [birthday=Barb]
-  if (equals=10-06) [birthday=Erin]
-  if (equals=08-27) [birthday=Hannah]
-  if (equals=05-03) [birthday=Myles]
-  if (equals=01-22) [birthday=Vivian]
-  %% if (equals=01-01) [birthday=Brent]
-  if (equals=11-02) [birthday=Eithan]
-  
-;
-\end{tikzpicture}}{%
-  \begin{tikzpicture}[thick]
-    \calendar[dates=#1-01 to #1-last,
-    week list,
-    month label above centered,
-    month text=\textsc{\%mt \%y0},
-    day headings={font=\footnotesize},
-    day letter headings]
-    %%if (Monday) [week number]
-    if (Sunday,
-    equals=01-01, % Newyears day 
-    equals=2017-02-20, % Family day
-    Easter=-2, % Good Friday
-    Easter=1,  % Easter Monday
-    equals=2017-05-22, % Victoria Day
-    equals=07-01, % Canada day
-    equals=2017-08-07, % Civic Holiday
-    equals=2017-09-04, % Labour Day
-    equals=2017-10-09, % Thanksgiving
-    equals=12-25, % Christmas Day
-    equals=12-26 %Boxing Day
-    ) [red]
-    if(equals=01-01) [observance= Newyears day ]
-    if(equals=2017-02-20) [observance= Family day]
-    if(Easter=-2) [observance= Good Friday]
-    if(Easter=1) [observance= Easter Monday]
-    if(equals=2017-05-22) [observance= Victoria Day]
-    if(equals=07-01) [observance= Canada day]
-    if(equals=2017-08-07) [observance= Civic Holiday]
-    if(equals=2017-09-04) [observance= Labour Day]
-    if(equals=2017-10-09) [observance= Thanksgiving]
-    if(equals=12-25) [observance= Christmas Day]
-    if(equals=12-26) [observance = Boxing Day]
-    %% Birthdays
-    if (equals=07-21) [birthday=Thomas]
-    if (equals=05-14) [birthday=Kai]
-    if (equals=01-28) [birthday=Karsten]
-    if (equals=09-25) [birthday={Bob, Beth, Jane}]
-    if (equals=06-08) [birthday=Barb]
-    if (equals=10-06) [birthday=Erin]
-    if (equals=08-27) [birthday=Hannah]
-    if (equals=05-03) [birthday=Myles]
-    if (equals=01-22) [birthday=Vivian]
-    %% if (equals=01-01) [birthday=Brent]
-    if (equals=11-02) [birthday=Eithan]
-    ;
-  \end{tikzpicture}
-} %end Canada
-\end{minipage}
+  \begin{minipage}{\textwidth}
+    \centering
+    \iftoggle{swedish}{%
+      \begin{tikzpicture}[thick]
+        \calendar[dates=#1-01 to #1-last,
+        week list,
+        month label above centered,
+        month text=\textsc{\%mt \%y0},
+        day headings={font=\footnotesize},
+        day letter headings]
+        if (Monday) [week number]
+        if (Sunday,
+        equals=01-01, % Nyårsdagen
+        equals=2017-01-06, % Trettondagen
+        Easter=-2, % Långfredag
+        Easter=1,  % Annandag påsk
+        equals=05-01, % Första maj
+        Easter=39, % Kristihimmelfärd
+        Easter=49, % Pingst
+        equals=06-06, % Flaggdagen
+        equals=2017-06-24, % Midsommar
+        equals=2017-11-04, % Alla helgons dag
+        equals=12-25, % Juldagen
+        equals=12-26 %Annandag Jul
+        ) [red]
+        if(equals=01-01) [observance = Nyårsdagen]
+        if(equals=2017-01-06) [observance = Trettondagen]
+        if(Easter=-2) [observance = Långfredag]
+        if(Easter=1) [observance =  Annandag påsk]
+        if(equals=05-01) [observance = Första maj]
+        if(Easter=39) [observance = Kristihimmelfärd]
+        if(Easter=49) [observance = Pingst]
+        if(equals=06-06) [observance = Flaggdagen]
+        if(equals=2017-06-24) [observance = Midsommar]
+        if(equals=2017-11-04) [observance = Alla helgons dag]
+        if(equals=12-25) [observance = Juldagen]
+        if(equals=12-26) [observance = Annandag Jul]
+        %% Birthdays
+        if (equals=07-21) [birthday=Thomas]
+        if (equals=05-14) [birthday=Kai]
+        if (equals=01-28) [birthday=Karsten]
+        if (equals=09-25) [birthday={Bob, Beth, Jane}]
+        if (equals=06-08) [birthday=Barb]
+        if (equals=10-06) [birthday=Erin]
+        if (equals=08-27) [birthday=Hannah]
+        if (equals=05-03) [birthday=Myles]
+        if (equals=01-22) [birthday=Vivian]
+        %% if (equals=01-01) [birthday=Brent]
+        if (equals=11-02) [birthday=Eithan]
+        ;
+      \end{tikzpicture}}{%
+      \begin{tikzpicture}[thick]
+        \calendar[dates=#1-01 to #1-last,
+        week list,
+        month label above centered,
+        month text=\textsc{\%mt \%y0},
+        day headings={font=\footnotesize},
+        day letter headings]
+        %% if (Monday) [week number]
+        if (Sunday,
+        equals=01-01, % Newyears day 
+        equals=2017-02-20, % Family day
+        Easter=-2, % Good Friday
+        Easter=1,  % Easter Monday
+        equals=2017-05-22, % Victoria Day
+        equals=07-01, % Canada day
+        equals=2017-08-07, % Civic Holiday
+        equals=2017-09-04, % Labour Day
+        equals=2017-10-09, % Thanksgiving
+        equals=12-25, % Christmas Day
+        equals=12-26 %Boxing Day
+        ) [red]
+        if(equals=01-01) [observance= Newyears day ]
+        if(equals=2017-02-20) [observance= Family day]
+        if(Easter=-2) [observance= Good Friday]
+        if(Easter=1) [observance= Easter Monday]
+        if(equals=2017-05-22) [observance= Victoria Day]
+        if(equals=07-01) [observance= Canada day]
+        if(equals=2017-08-07) [observance= Civic Holiday]
+        if(equals=2017-09-04) [observance= Labour Day]
+        if(equals=2017-10-09) [observance= Thanksgiving]
+        if(equals=12-25) [observance= Christmas Day]
+        if(equals=12-26) [observance = Boxing Day]
+        %% Birthdays
+        if (equals=07-21) [birthday=Thomas]
+        if (equals=05-14) [birthday=Kai]
+        if (equals=01-28) [birthday=Karsten]
+        if (equals=09-25) [birthday={Bob, Beth, Jane}]
+        if (equals=06-08) [birthday=Barb]
+        if (equals=10-06) [birthday=Erin]
+        if (equals=08-27) [birthday=Hannah]
+        if (equals=05-03) [birthday=Myles]
+        if (equals=01-22) [birthday=Vivian]
+        %% if (equals=01-01) [birthday=Brent]
+        if (equals=11-02) [birthday=Eithan]
+        ;
+      \end{tikzpicture}
+    } %end Canada
+  \end{minipage}
 }
 
 \begin{document}
