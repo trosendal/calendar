@@ -4,7 +4,12 @@
 % Set calendar type
 \usepackage{etoolbox}
 \providetoggle{swedish}
-\settoggle{swedish}{true}
+
+\ifdefined\iscanada
+  \settoggle{swedish}{false}
+\else
+  \settoggle{swedish}{true}
+\fi
 
 %% \usepackage[norsk]{babel}
 \usepackage[utf8]{inputenc}
